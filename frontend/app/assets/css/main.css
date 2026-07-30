@@ -1,0 +1,154 @@
+:root {
+  --scarlet: #7f0000;
+  --grayer: #7f7f7f;
+  --white: #fff;
+  --black: #000;
+}
+
+* {
+  font-family: "Noto Mono NF", "Noto Sans Mono", monospace;
+  transition: 0.2s ease;
+}
+
+body {
+  background-color: var(--scarlet);
+  margin: 0;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+main {
+  background-color: var(--white);
+
+  width: 90vw;
+  max-width: 1000px;
+
+  margin: 0;
+  padding: 10px 40px;
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+nav .left, nav .center, nav .right {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+}
+
+.navico {
+  width: 20px;
+  height: 20px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--scarlet);
+  margin: 50px 0 0 0;
+  border-bottom: solid var(--scarlet) 5px;
+}
+
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 27px;
+}
+
+h3 {
+  font-size: 24px;
+}
+
+h4 {
+  font-size: 21px;
+}
+
+h5 {
+  font-size: 18px;
+}
+
+h6 {
+  font-size: 15px;
+}
+
+p {
+  color: var(--black);
+  font-size: 16px;
+  margin: 0 0 10px 0;
+}
+
+button {
+  font-size: 16px;
+  text-align: center;
+
+  background: var(--white);
+  color: var(--black);
+
+  border: none;
+  margin: 10px;
+  box-shadow: 5px 5px 0 var(--black), -5px -5px 0 var(--scarlet);
+}
+
+button:hover {
+  box-shadow: 8px 8px 0 var(--scarlet), -8px -8px 0 var(--black);
+}
+
+button.highlight {
+  background: var(--white);
+  color: var(--black);
+  box-shadow: 5px 5px 0 var(--black), -5px -5px 0 var(--black);
+}
+
+button.highlight:hover {
+  background: var(--white);
+  color: var(--black);
+  box-shadow: 8px 8px 0 var(--scarlet), -8px -8px 0 var(--black);
+}
+
+.page_title {
+  background-color: var(--white);
+  
+  margin: -10px -40px;
+  padding: 30px;
+
+  min-height: 300px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  border-bottom: solid var(--black) 5px;
+
+  margin-bottom: 20px;
+}
+
+.page_title h1, .page_title h2 {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.page_title h1 {
+  font-size: 40px;
+}
+
+.page_title h2 {
+  font-size: 20px;
+}
+
