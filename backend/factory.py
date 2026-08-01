@@ -20,12 +20,14 @@ def create_app(name) -> Flask:
   jwt.init_app(app)
 
   db.init_app(app)
-  from models import User
-  migrate.init_app(app)
+  import models
+  migrate.init_app(app, db)
 
   from controllers import user_bp
 
   app.register_blueprint(user_bp)
+
+  api.register(app)
 
   CORS(app, resources={"/*": {"origins": "*"}})
 

@@ -26,6 +26,8 @@ def wrap_resp(route_f):
 
     return jsonify(resp), code;
 
+  return wrapped_route
+
 class req_perms:
   """
   Require JWT and a list of permissions (optionally).
