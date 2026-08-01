@@ -39,10 +39,10 @@ class UserRole(Enum):
   ADMIN = 20
 
   permissions = {
-      STUDENT: [UserPerm.FOLLOW, UserPerm.READLIST]
-      POSTER: [UserPerm.POST]
-      TEACHER: [UserPerm.POST, UserPerm.LESSON, UserPerm.CLASS]
-      MODERATOR: [UserPerm.MODERATE]
+      STUDENT: [UserPerm.FOLLOW, UserPerm.READLIST],
+      POSTER: [UserPerm.POST],
+      TEACHER: [UserPerm.POST, UserPerm.LESSON, UserPerm.CLASS],
+      MODERATOR: [UserPerm.MODERATE],
       ADMIN: list(UserPerm)
     }
 

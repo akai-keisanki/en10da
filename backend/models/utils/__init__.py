@@ -1,1 +1,1 @@
-from .user_role import UserPermission, UserRole
+from .user_role import UserPerm, UserRole
