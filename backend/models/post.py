@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from factory import db
 from .likes import likes
 from .readlist_posts import readlist_posts
@@ -9,6 +11,8 @@ class Post(db.Model):
 
   title = db.Column(db.String(128), nullable=False)
   content = db.Column(db.Text, nullable=False)
+
+  creation_datetime = db.Column(db.DateTime, nullable=False, default=lambda: datetime.utcnow().date())
 
   author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   author = db.relationship('User', back_populates='posts')

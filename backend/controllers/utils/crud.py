@@ -1,3 +1,5 @@
+# DEPRECATED: probably useless
+
 from typing import Optional
 
 from pydantic import BaseModel
@@ -8,8 +10,10 @@ from factory import api, db
 from . import wrap_resp, req_perms
 from models.utils.responses import DefaultResp
 
+NPPAGE: int = 64
+
 class RouteInfo(BaseModel):
-  resp: BaseModel | None = None
+  resp: Optional[BaseModel] = None
   model: db.Model
   req: Optional[BaseModel] = None
   perms: Optional[list[UserPerm]] = None
@@ -22,7 +26,7 @@ def make_crud_el(bp: Blueprint, tag: str, type: str, info: RouteInfo):
     }
 
   if type == 'C':
-    @api.validate(json=info.req, resp=Response(HTTP_200=DefaultResp), **fixed_params)
+    @api.validate(json=info.req, resp=Response(HTTP_201=DefaultResp), **fixed_params)
     @bp.post('/')
     @wrap_resp
     @req_perms(info.perms)
@@ -34,7 +38,7 @@ def make_crud_el(bp: Blueprint, tag: str, type: str, info: RouteInfo):
 
   else if type == 'R':
     @api.validate(resp=Response(HTTP_200=info.resp, HTTP_400=DefaultResp), **fixed_params)
-    @bp.post('/<id:int>')
+    @bp.get('/<id:int>')
     @wrap_resp
     @req_perms(info.perms)
     def crud_read(id: int):
@@ -44,17 +48,35 @@ def make_crud_el(bp: Blueprint, tag: str, type: str, info: RouteInfo):
       return info.resp.model_validate(el).model_dump(), 200
 
   else if type == 'Q':
-    @api.validate(resp=Response(HTTP_200=info.resp, HTTP_400=DefaultResp), **fixed_params)
-    @bp.post('/<id:int>')
+    @api.validate(query=info.req, resp=Response(HTTP_200=info.resp), **fixed_params)
+    @bp.get('/<page:int>')
+    @wrap_resp
+    @req_perms(info.perms)
+    def crud_read(page: int):
+      q = info.model.query
+      for key in info.req.fields.keys():
+        v = request.get(key)
+        if v is not None:
+          q = q.filter_by(**{key: v})
+      res = db.paginate(q, page=page, per_page=NPPAGE).items
+      return info.resp.model_validate(**{info.resp.fields.keys()[0]: el}).model_dump(), 200
+
+  else if type == 'U':
+    @api.validate(json=info.req, resp=Response(HTTP_200=DefaultResp, HTTP_400=DefaultResp), **fixed_params)
+    @bp.get('/<id:int>')
     @wrap_resp
     @req_perms(info.perms)
     def crud_read(id: int):
       el = info.model.query.filter_by(id=id).first()
       if not el:
         return 'ID not found', 404
-      return info.resp.model_validate(el).model_dump(), 200
-
-  else if type == 'U':
+      q = info.model.query()
+      for key in info.req.fields.keys():
+        v = request.get(key)
+        if v is not None:
+          el.
+      res = db.paginate(q, page=page, per_page=NPPAGE).items
+      return 'Updated successfully!', 200
 
   else if type == 'D':
 
