@@ -1,9 +1,13 @@
 from pydantic import BaseModel
 from datetime import date
 
-class UserLoginJSON(BaseModel):
+from . import UserRole
+
+class UserLogin(BaseModel):
   email: str
   password: str
+
+class UserCreate(UserLogin)
   name: str
   birthday: date
-
+  role: UserRole

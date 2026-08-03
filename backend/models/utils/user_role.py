@@ -32,11 +32,11 @@ class UserPerm(Enum):
     return mask
 
 class UserRole(Enum):
-  STUDENT = 1
-  POSTER = 2
-  TEACHER = 3
-  MODERATOR = 19
-  ADMIN = 20
+  STUDENT = 'STUDENT'
+  POSTER = 'POSTER'
+  TEACHER = 'TEACHER'
+  MODERATOR = 'MODERATOR'
+  ADMIN = 'ADMIN'
 
   permissions = {
       STUDENT: [UserPerm.FOLLOW, UserPerm.READLIST],
