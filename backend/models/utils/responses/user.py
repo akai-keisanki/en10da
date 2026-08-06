@@ -10,3 +10,6 @@ class UserRespSum(ORMBase):
 
 class UserResp(UserRespSum):
   name: str
+
+class UserQueryResp(BaseModel):
+  users: list[UserResp]

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import Enum, StrEnum, auto
 
 class UserPerm(Enum):
   POST = 0b0000_0001
@@ -32,19 +32,11 @@ class UserPerm(Enum):
     return mask
 
 class UserRole(StrEnum):
-  STUDENT = 'STUDENT'
-  POSTER = 'POSTER'
-  TEACHER = 'TEACHER'
-  MODERATOR = 'MODERATOR'
-  ADMIN = 'ADMIN'
-
-  permissions = {
-      STUDENT: [UserPerm.FOLLOW, UserPerm.READLIST],
-      POSTER: [UserPerm.POST],
-      TEACHER: [UserPerm.POST, UserPerm.LESSON, UserPerm.CLASS],
-      MODERATOR: [UserPerm.MODERATE],
-      ADMIN: list(UserPerm)
-    }
+  STUDENT = auto()
+  POSTER = auto()
+  TEACHER = auto()
+  MODERATOR = auto()
+  ADMIN = auto()
 
   @classmethod
   def from_int(cls, id: int) -> UserRole:
@@ -61,4 +53,12 @@ class UserRole(StrEnum):
     raise ValueError("Role name was not found.")
 
   def get_perm_mask(self) -> int:
-    return UserPerm.join_n(self.permissions[self])
+    return UserPerm.join_n(user_r2p_map[self])
+
+user_r2p_map = {
+    UserRole.STUDENT: [UserPerm.FOLLOW, UserPerm.READLIST],
+    UserRole.POSTER: [UserPerm.POST],
+    UserRole.TEACHER: [UserPerm.POST, UserPerm.LESSON, UserPerm.CLASS],
+    UserRole.MODERATOR: [UserPerm.MODERATE],
+    UserRole.ADMIN: list(UserPerm)
+  }

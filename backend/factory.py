@@ -10,7 +10,14 @@ from config import Config
 db = SQLAlchemy()
 migrate = Migrate()
 jwt = JWTManager()
-api = SpecTree('flask', path='docs', security_schemes=[{'name': 'BearerAuth', 'data': {'type': 'http', 'scheme': 'bearer', 'bearerFormat': 'JWT'}}])
+api = SpecTree(
+                'flask',
+                title='En10da API',
+                version='v0.0.0',
+                path='docs',
+                validation_error_status=422,
+                security_schemes=[{'name': 'BearerAuth', 'data': {'type': 'http', 'scheme': 'bearer', 'bearerFormat': 'JWT'}}]
+              )
 
 def create_app(name) -> Flask:
   app = Flask(name)

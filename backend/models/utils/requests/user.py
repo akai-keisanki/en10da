@@ -3,7 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from . import UserRole
+from models.utils import UserRole
 
 class UserLogin(BaseModel):
   email: str

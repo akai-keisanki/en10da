@@ -20,7 +20,7 @@ def get_user(id: int) -> User:
 def query_users(data: UserQuery) -> list[User]:
   ...
   
-def update_user(user: User, data: UserUpdate)
+def update_user(user: User, data: UserUpdate) -> None:
   ...
 
 def delete_user(user: User) -> None:

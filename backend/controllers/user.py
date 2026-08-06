@@ -3,6 +3,10 @@ from spectree import Response
 
 from factory import api
 from .utils import wrap_resp
+from models.utils.responses import DefaultResp
+from models.utils.requests.user import UserLogin, UserCreate, UserUpdate
+from models.utils.responses.user import UserLoginResp, UserResp, UserQueryResp
+from .utils.user import create_user, get_logged_user, get_user, query_users, update_user, delete_user
 
 user_bp = Blueprint('user_controllers', __name__, url_prefix='/user')
 
