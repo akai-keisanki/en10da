@@ -8,7 +8,6 @@ class Channel(db.Model):
   id = db.Column(db.Integer, primary_key=True)
 
   name = db.Column(db.String(128), nullable=False)
-  description = db.Column(db.String(512), nullable=False, default='')
 
   creation_datetime = db.Column(db.DateTime, nullable=False, default=lambda: datetime.utcnow().date())
   
@@ -16,3 +15,6 @@ class Channel(db.Model):
   author = db.relationship('User', back_populates='channels')
 
   posts = db.relationship('Post', back_populates='channel')
+
+  like_count = db.Column(db.Integer, nullable=False, default=0)
+  dislike_count = db.Column(db.Integer, nullable=False, default=0)

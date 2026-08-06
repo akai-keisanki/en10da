@@ -2,9 +2,10 @@ from functools import wraps
 
 from flask import jsonify
 
-from models import User
 from models.utils import UserPerm
 from models.utils.responses import DefaultResp
+from models import User
+from .user import get_logged_user
 
 def wrap_resp(route_f):
   """
@@ -43,7 +44,7 @@ class req_perms:
 
     @wraps(route_f)
     def wrapped_route(*args, **kwargs):
-      user = User.query.filter_by(id=int(get_jwt_identity())).first()
+      user = get_logged_user()
       if not user:
         return "Logged user was not found.", 404
 

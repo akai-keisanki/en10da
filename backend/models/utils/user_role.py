@@ -31,7 +31,7 @@ class UserPerm(Enum):
       mask = cls.join(mask, perm)
     return mask
 
-class UserRole(Enum):
+class UserRole(StrEnum):
   STUDENT = 'STUDENT'
   POSTER = 'POSTER'
   TEACHER = 'TEACHER'

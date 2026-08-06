@@ -2,6 +2,7 @@ from datetime import datetime
 
 from factory import db
 from .likes import likes
+from .dislikes import dislikes
 from .readlist_posts import readlist_posts
 
 class Post(db.Model):
@@ -21,4 +22,9 @@ class Post(db.Model):
   channel = db.relationship('Channel', back_populates='posts')
 
   likes = db.relationship('User', secondary=likes, back_populates='liked_posts')
+  dislikes = db.relationship('User', secondary=dislikes, back_populates='disliked_posts')
+
+  like_count = db.Column(db.Integer, nullable=False, default=0)
+  dislike_count = db.Column(db.Integer, nullable=False, default=0)
+
   readlists = db.relationship('Readlist', secondary=readlist_posts, back_populates='posts')
