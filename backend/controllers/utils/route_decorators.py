@@ -5,6 +5,7 @@ from flask import jsonify
 from models.utils import UserPerm
 from models.utils.responses import DefaultResp
 from models import User
+from . import APIError
 from .user import get_logged_user
 
 def wrap_resp(route_f):
@@ -14,11 +15,15 @@ def wrap_resp(route_f):
 
   @wraps(route_f)
   def wrapped_route(*args, **kwargs):
+    resp = "Undefined response"
+    code = 200
+
     try:
       resp = route_f(*args, **kwargs)
     except ValueError:
-      return "ValueError", 400
-    code = 200
+      resp = ("ValueError", 400)
+    except APIError as e:
+      resp = (e.msg, e.code)
 
     if isinstance(resp, tuple):
       resp, code = resp

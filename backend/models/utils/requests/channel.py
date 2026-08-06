@@ -3,17 +3,15 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-class PostCreate(BaseModel):
+class ChannelCreate(BaseModel):
   title: str
-  content: str
-  channel_id: int
 
-class PostQuery(BaseModel):
+class ChannelQuery(BaseModel):
   title: Optional[str] = None
   content: Optional[str] = None
   channel_id: Optional[int] = None
 
-class PostUpdate(BaseModel):
+class ChannelUpdate(BaseModel):
   title: Optional[str] = None
   content: Optional[str] = None
   channel_id: Optional[int] = None

@@ -15,9 +15,9 @@ class UserCreate(UserLogin):
   role: UserRole
 
 class UserQuery(BaseModel):
-  name: Optional[str]
-  handle: Optional[str]
-  about_content: Optional[str]
+  name: Optional[str] = None
+  handle: Optional[str] = None
+  about_content: Optional[str] = None
 
 class UserUpdate(BaseModel):
   name: Optional[str] = None

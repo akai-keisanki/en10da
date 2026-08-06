@@ -1,6 +1,10 @@
 from factory import db
 from models import User
 from models.utils.requests.user import UserLogin, UserCreate, UserQuery, UserUpdate
+from . import APIError
+
+def check_if_moderator(user: User) -> bool:
+  ...
 
 def create_user(data: UserCreate) -> None:
   user = User(**data.model_dump())
