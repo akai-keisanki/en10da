@@ -221,6 +221,7 @@ __marimo__/
 
 # Flask
 app.db
+migrations/
 
 # NODE GITIGNORE
 

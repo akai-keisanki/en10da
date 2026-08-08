@@ -5,12 +5,9 @@ from pydantic import BaseModel
 
 from models.utils import UserRole
 
-class UserLogin(BaseModel):
-  email: str
-  password: str
-
-class UserCreate(UserLogin):
+class UserCreate(BaseModel):
   handle: str
+  email: str
   birthday: date
   role: UserRole
 
@@ -24,3 +21,15 @@ class UserUpdate(BaseModel):
   birthday: Optional[date] = None
   handle: Optional[str] = None
   password: Optional[str] = None
+
+class UserLogin(BaseModel):
+  handle: str
+  password: str
+
+class UserEmailCodeRequest(BaseModel):
+  handle: str
+  email: str
+
+class UserEmailLogin(BaseModel):
+  handle: str
+  email_code: str

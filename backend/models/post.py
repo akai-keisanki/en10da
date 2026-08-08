@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from factory import db
 from .likes import likes
@@ -10,10 +10,11 @@ class Post(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
 
+  handle = db.Column(db.String(128), nullable=False, unique=True)
   title = db.Column(db.String(128), nullable=False)
   content = db.Column(db.Text, nullable=False)
 
-  creation_datetime = db.Column(db.DateTime, nullable=False, default=lambda: datetime.utcnow().date())
+  creation_datetime = db.Column(db.DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
   author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   author = db.relationship('User', back_populates='posts')
@@ -28,3 +29,7 @@ class Post(db.Model):
   dislike_count = db.Column(db.Integer, nullable=False, default=0)
 
   readlists = db.relationship('Readlist', secondary=readlist_posts, back_populates='posts')
+
+  __table_args__ = (
+    db.UniqueConstraint('channel_id', 'handle', name='uq_handle'),
+  )
