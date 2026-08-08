@@ -62,8 +62,25 @@ def send_user_email_code(data: UserEmailCodeRequest) -> DefaultResp:
     raise APIError('There was already sent a valid email code.', 409)
   code = token_urlsafe(randint(128, 256))
   user.set_email_code(code)
-  send_email(subject='En10da email code',
-             body=f'If you don\'t have an En10da account, please ignore this email.\nGenerated code: {code}\nExpires at {user.email_code_expiration_datetime} UTC or at use.',
+  send_email(subject='email code',
+             body=f"""
+              <p class=card-text>
+              If you don\'t have an En10da account, please ignore this email.
+              </p>
+              <p>
+                An email code was requested.
+                The following code expires at {user.email_code_expiration_datetime} UTC or at use.
+              </p>
+              <p class=card-text>
+                Generated code:
+                <div class=card-body>
+                  <code class=card-text>
+                    {code}
+                  </code>
+                </div>
+              </p>
+             """,
+             html=True,
              address=user.email)
   db.session.commit()
   return DefaultResp(msg='Email sent successfully!')
