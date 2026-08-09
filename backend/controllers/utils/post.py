@@ -10,9 +10,9 @@ def owns_post(user: User, post: Post) -> bool:
   return post.author == user or user.is_moderator(user)
 
 def create_post(user: User, data: PostCreate) -> DefaultResp:
-  chn = channel.get_channel_by_path(user.handle, data.channel_handle)
+  chn = channel.get_channel_by_path(user.handle, data.channel.handle)
   data = data.model_dump()
-  del data['channel_handle']
+  data.pop('channel')
   pst = Post(author=user, channel=chn, **data)
   db.session.add(pst)
   db.session.commit()

@@ -17,7 +17,7 @@ def send_email(subject: str, body: str, address: str, html: bool = False) -> boo
   subject = 'En10da: ' + subject
 
   msg['Subject'] = subject
-  msg['From'] = Config.SMTP_USERNAME
+  msg['From'] = Config.SMTP_SENDER
   msg['To'] = address
 
   if html:

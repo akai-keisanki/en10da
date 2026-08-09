@@ -5,10 +5,8 @@ from . import ORMBase
 class UserLoginResp(BaseModel):
   access_token: str
 
-class UserRespSum(ORMBase):
+class UserResp(ORMBase):
   handle: str
-
-class UserResp(UserRespSum):
   name: str
 
 class UserQueryResp(BaseModel):

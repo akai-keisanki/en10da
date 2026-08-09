@@ -21,8 +21,8 @@ def channel_create(user: User):
   return create_channel(user, ChannelCreate.model_validate(request.get_json())).model_dump()
 
 @channel_bp.get('/<string:user_handle>/<string:channel_handle>')
-@api.validate(resp=Response(HTTP_200=DefaultResp), tags=['channel'])
+@api.validate(resp=Response(HTTP_200=ChannelResp), tags=['channel'])
 @wrap_resp()
-def channel_get(user_handle: str, channel_handle):
+def channel_get(user_handle: str, channel_handle: str):
   return ChannelResp.model_validate(get_channel_by_path(user_handle, channel_handle)).model_dump()
 

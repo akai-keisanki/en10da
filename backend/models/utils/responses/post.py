@@ -3,18 +3,17 @@ from datetime import datetime
 from pydantic import BaseModel
 
 from . import ORMBase
-from .user import UserRespSum
-from .channel import ChannelResp
+from .user import UserResp
+from .channel import ChannelResp0
 
-class PostRespSum0(ORMBase):
-  name: str
+class PostRespSum(ORMBase):
+  handle: str
+  title: str
   creation_datetime: datetime
-  likes_count: int
-  dislikes_count: int
-  author: UserRespSum
-
-class PostRespSum(PostRespSum0):
-  channel: ChannelResp
+  like_count: int
+  dislike_count: int
+  author: UserResp
+  channel: ChannelResp0
 
 class PostResp(PostRespSum):
   content: str
