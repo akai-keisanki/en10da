@@ -10,7 +10,7 @@ class ChannelResp0(ORMBase):
   name: str
 
 class ChannelResp(ChannelResp0):
-  user: UserResp
+  author: UserResp
 
 class ChannelQueryResp(BaseModel):
   channels: list[ChannelResp]
