@@ -18,11 +18,11 @@ post_bp = Blueprint('post_controllers', __name__, url_prefix='/post')
 @req_perms([UserPerm.POST])
 @wrap_resp(def_code=201)
 def post_create(user: User):
-  return create_post(user, PostCreate.model_validate(request.get_json())).model_dump()
+  return create_post(user, PostCreate.model_validate(request.get_json()))
 
 @post_bp.get('/<string:user_handle>/<string:channel_handle>/<string:post_handle>')
 @api.validate(resp=Response(HTTP_200=PostResp), tags=['post'])
 @wrap_resp()
 def post_get(user_handle: str, channel_handle: str, post_handle: str):
-  return PostResp.model_validate(get_post_by_path(user_handle, channel_handle, post_handle)).model_dump()
+  return PostResp.model_validate(get_post_by_path(user_handle, channel_handle, post_handle))
 

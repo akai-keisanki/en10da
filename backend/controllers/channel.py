@@ -18,11 +18,11 @@ channel_bp = Blueprint('channel_controllers', __name__, url_prefix='/channel')
 @req_perms([UserPerm.POST])
 @wrap_resp(def_code=201)
 def channel_create(user: User):
-  return create_channel(user, ChannelCreate.model_validate(request.get_json())).model_dump()
+  return create_channel(user, ChannelCreate.model_validate(request.get_json()))
 
 @channel_bp.get('/<string:user_handle>/<string:channel_handle>')
 @api.validate(resp=Response(HTTP_200=ChannelResp), tags=['channel'])
 @wrap_resp()
 def channel_get(user_handle: str, channel_handle: str):
-  return ChannelResp.model_validate(get_channel_by_path(user_handle, channel_handle)).model_dump()
+  return ChannelResp.model_validate(get_channel_by_path(user_handle, channel_handle))
 

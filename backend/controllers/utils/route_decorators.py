@@ -1,5 +1,6 @@
 from functools import wraps
 
+from pydantic import BaseModel
 from flask import jsonify
 from flask_jwt_extended import jwt_required
 
@@ -37,6 +38,8 @@ class wrap_resp:
 
       if isinstance(resp, tuple):
         resp, code = resp
+      if isinstance(resp, BaseModel):
+        resp = resp.model_dump()
       if isinstance(resp, str):
         resp = DefaultResp(msg=resp).model_dump()
 

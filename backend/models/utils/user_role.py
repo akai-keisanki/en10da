@@ -55,10 +55,20 @@ class UserRole(StrEnum):
   def get_perm_mask(self) -> int:
     return UserPerm.join_n(user_r2p_map[self])
 
-user_r2p_map = {
+  @classmethod
+  def get_available(cls) -> list[UserRole]:
+    return av_urs
+
+user_r2p_map: dict[UserRole, list[UserPerm]] = {
     UserRole.STUDENT: [UserPerm.FOLLOW, UserPerm.READLIST],
     UserRole.POSTER: [UserPerm.POST],
     UserRole.TEACHER: [UserPerm.POST, UserPerm.LESSON, UserPerm.CLASS],
     UserRole.MODERATOR: [UserPerm.MODERATE],
     UserRole.ADMIN: list(UserPerm)
   }
+
+av_urs: list[UserRole] = [
+    UserRole.STUDENT,
+    UserRole.POSTER,
+    UserRole.TEACHER
+  ] 

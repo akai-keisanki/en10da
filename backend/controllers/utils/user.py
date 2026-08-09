@@ -7,7 +7,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from factory import db
 from models import User
 from models.utils import UserRole, UserPerm
-from models.utils.requests.user import UserCreate, UserQuery, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin
+from models.utils.requests.user import UserCreate, UserQuery, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin, UserRoleList
 from models.utils.requests.channel import ChannelCreate
 from models.utils.responses import DefaultResp
 from models.utils.responses.user import UserLoginResp, UserQueryResp
@@ -17,7 +17,12 @@ from . import channel
 def check_if_moderator(user: User) -> bool:
   return UserRole.from_int(user.role).get_perm_mask() & UserPerm.MODERATE.value == UserPerm.MODERATE.value
 
+def list_user_roles() -> list[UserRoles]:
+  return UserRole.get_available()
+
 def create_user(data: UserCreate) -> DefaultResp:
+  if data.role is not in list_user_roles():
+    raise APIError('Forbidden role assignment.', 403)
   user = User(name=data.handle, **data.model_dump())
   db.session.add(user)
   channel.create_channel(user, ChannelCreate(handle=user.handle, name=user.name))
@@ -104,5 +109,3 @@ def make_user_login_by_email_code(data: UserEmailLogin) -> UserLoginResp:
   if not user.check_email_code(data.email_code):
     raise APIError('Wrong or invalid email code.', 401)
   return UserLoginResp(access_token=make_user_access_token(user))
-
-
