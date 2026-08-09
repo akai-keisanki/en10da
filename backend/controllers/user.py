@@ -2,19 +2,19 @@ from flask import Blueprint, request
 from spectree import Response
 
 from factory import api
-from .utils import wrap_resp, req_perms, BA_SEC
 from models import User
 from models.utils.responses import DefaultResp
 from models.utils.requests.user import UserCreate, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin
 from models.utils.responses.user import UserLoginResp, UserResp, UserQueryResp
+from .utils import wrap_resp, req_perms, BA_SEC
 from .utils.user import create_user, make_user_login, make_user_login_by_email_code, get_logged_user, get_user_by_handle, query_users, update_user, delete_user, send_user_email_code
 
 user_bp = Blueprint('user_controllers', __name__, url_prefix='/user')
 
-@user_bp.post('/')
+@user_bp.post('/logon')
 @api.validate(json=UserCreate, resp=Response(HTTP_200=DefaultResp), tags=['user'])
 @wrap_resp(def_code=201)
-def user_create():
+def user_logon():
   return create_user(UserCreate.model_validate(request.get_json())).model_dump()
 
 @user_bp.post('/login')
@@ -47,5 +47,12 @@ def user_get(user: User):
 @wrap_resp()
 def user_handle_get(handle: str):
   return UserResp.model_validate(get_user_by_handle(handle)).model_dump()
+
+@user_bp.post('/')
+@api.validate(json=UserUpdate, resp=Response(HTTP_200=DefaultResp), tags=['user'], security=BA_SEC)
+@wrap_resp(def_code=201)
+@req_perms()
+def user_post(user: User):
+  return update_user(user, UserUpdate.model_validate(request.get_json())).model_dump()
 
 

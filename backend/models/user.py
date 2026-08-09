@@ -13,11 +13,11 @@ class User(db.Model):
 
   id = db.Column(db.Integer, primary_key=True)
 
-  email = db.Column(db.String(128), nullable=False)
+  email = db.Column(db.Text, nullable=False)
   @validates('email')
   def validate_email(self, key, value):
     value = value.strip().lower()
-    if not re.match('[a-z0-9_.]+@[a-z0-9_.]', value):
+    if not re.match('[a-z0-9_.]+@[a-z0-9_.]+', value):
       raise ValueError('Invalid email.')
     return value
 
@@ -55,17 +55,29 @@ class User(db.Model):
     return False
 
   role = db.Column(db.String(32), nullable=False)
+  @validates('role')
+  def validate_role(self, key, value):
+    value = value.strip().lower()
+    if value not in list(UserRole):
+      raise ValueError('Invalid role.')
+    return value
 
   handle = db.Column(db.String(64), nullable=False, unique=True)
+  @validates('handle')
+  def validate_handle(self, key, value):
+    value = value.strip().lower()
+    if not re.match('[a-zA-Z_-]+', value):
+      raise ValueError('Invalid handle.')
+    return value
   name = db.Column(db.String(64), nullable=False)
   birthday = db.Column(db.Date)
 
   creation_datetime = db.Column(db.DateTime(timezone=True), nullable=False, default=lambda: datetime.now(timezone.utc))
 
-  posts = db.relationship('Post', back_populates='author')
-  channels = db.relationship('Channel', back_populates='author')
+  posts = db.relationship('Post', back_populates='author', cascade='all, delete-orphan')
+  channels = db.relationship('Channel', back_populates='author', cascade='all, delete-orphan')
 
   liked_posts = db.relationship('Post', secondary=likes, back_populates='likes')
   disliked_posts = db.relationship('Post', secondary=dislikes, back_populates='dislikes')
 
-  readlists = db.relationship('Readlist', back_populates='author')
+  readlists = db.relationship('Readlist', back_populates='author', cascade='all, delete-orphan')

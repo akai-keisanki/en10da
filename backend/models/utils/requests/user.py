@@ -12,14 +12,14 @@ class UserCreate(BaseModel):
   role: UserRole
 
 class UserQuery(BaseModel):
-  name: Optional[str] = None
   handle: Optional[str] = None
+  name: Optional[str] = None
   about_content: Optional[str] = None
 
 class UserUpdate(BaseModel):
+  handle: Optional[str] = None
   name: Optional[str] = None
   birthday: Optional[date] = None
-  handle: Optional[str] = None
   password: Optional[str] = None
 
 class UserLogin(BaseModel):

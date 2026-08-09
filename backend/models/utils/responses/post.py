@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 from . import ORMBase
 from .user import UserRespSum
-from .channel import ChannelRespSum
+from .channel import ChannelResp
 
 class PostRespSum0(ORMBase):
   name: str
@@ -13,8 +13,8 @@ class PostRespSum0(ORMBase):
   dislikes_count: int
   author: UserRespSum
 
-class PostRespSum(PostRespSum0)
-  channel: ChannelRespSum
+class PostRespSum(PostRespSum0):
+  channel: ChannelResp
 
 class PostResp(PostRespSum):
   content: str

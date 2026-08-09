@@ -15,7 +15,7 @@ class Channel(db.Model):
   author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
   author = db.relationship('User', back_populates='channels')
 
-  posts = db.relationship('Post', back_populates='channel')
+  posts = db.relationship('Post', back_populates='channel', cascade='all, delete-orphan')
 
   like_count = db.Column(db.Integer, nullable=False, default=0)
   dislike_count = db.Column(db.Integer, nullable=False, default=0)

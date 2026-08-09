@@ -3,15 +3,20 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-class ChannelCreate(BaseModel):
-  title: str
+class ChannelSum(BaseModel):
+  handle: str
 
-class ChannelQuery(BaseModel):
-  title: Optional[str] = None
-  content: Optional[str] = None
-  channel_id: Optional[int] = None
+class ChannelCreate(ChannelSum):
+  name: str
+
+class ChannelQuerySum(BaseModel):
+  handle: Optional[str] = None
+  name: Optional[str] = None
+  about_content: Optional[str] = None
+
+class ChannelQuery(ChannelQuerySum):
+  user: Optional[UserQuery] = None
 
 class ChannelUpdate(BaseModel):
-  title: Optional[str] = None
-  content: Optional[str] = None
-  channel_id: Optional[int] = None
+  handle: Optional[str] = None
+  name: Optional[str] = None

@@ -4,40 +4,47 @@ from models.utils.requests.post import PostCreate, PostQuery, PostUpdate
 from models.utils.responses import DefaultResp
 from models.utils.responses.post import PostQueryResp
 from . import APIError
-from .user import is_moderator
+from . import user, channel
 
 def owns_post(user: User, post: Post) -> bool:
-  return post.author == user or is_moderator(user)
+  return post.author == user or user.is_moderator(user)
 
 def create_post(user: User, data: PostCreate) -> DefaultResp:
-  ...
+  chn = channel.get_channel_by_path(user.handle, data.channel_handle)
+  data = data.model_dump()
+  del data['channel_handle']
+  pst = Post(author=user, channel=chn, **data)
+  db.session.add(pst)
+  db.session.commit()
   return DefaultResp(msg='Post created successfully!')
 
 def get_post(id: int) -> Post:
-  post = Post.query.filter_by(id=id).first()
-  if not post:
+  pst = Post.query.filter_by(id=id).first()
+  if not pst:
     raise APIError('Post not found', 404)
-  return post
+  return pst
 
 def get_post_by_path(user_handle: str, channel_handle: str, post_handle: str) -> Post:
-  post = Post.query.join(User).join(Channel).filter(User.handle == user_handle,
+  pst = Post.query.join(User).join(Channel).filter(User.handle == user_handle,
                                                     Channel.handle == channel_handle,
                                                     Post.handle == post_handle).first()
-  if not post:
+  if not pst:
     raise APIError('Post not found', 404)
-  return post
+  return pst
 
 def query_posts(data: PostQuery) -> PostQueryResp:
   ...
 
-def update_post(user: User, post: Post, data: PostUpdate) -> DefaultResp:
-  if not owns_post(user, post):
+def update_post(user: User, pst: Post, data: PostUpdate) -> DefaultResp:
+  if not owns_post(user, pst):
     raise APIError("Forbidden operation with unauthoral post.", 403)
   ...
   return DefaultResp(msg='Post updated successfully!')
 
-def delete_post(user: User, post: Post) -> DefaultResp:
-  if not owns_post(user, post):
+def delete_post(user: User, pst: Post) -> DefaultResp:
+  if not owns_post(user, pst):
     raise APIError("Forbidden operation with unauthoral post.", 403)
+  if pst.handle == "sobre":
+    raise APIError("Cannot delete the default channel \"sobre\" post.", 403)
   ...
   return DefaultResp(msg='Post deleted successfully!')

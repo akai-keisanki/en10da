@@ -4,5 +4,9 @@ from pydantic import BaseModel
 
 from . import ORMBase
 
-class ChannelRespSum(ORMBase):
-  name: str
+class ChannelResp(ORMBase):
+  handle: str
+  title: str
+
+class ChannelQueryResp(BaseModel):
+  channels: list[ChannelResp]

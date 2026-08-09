@@ -28,8 +28,8 @@ class wrap_resp:
 
       try:
         resp = route_f(*args, **kwargs)
-      except ValueError:
-        resp = ("ValueError", 400)
+      except ValueError as e:
+        resp = (f'ValueError ({e})', 400)
       except APIError as e:
         resp = (e.msg, e.code)
 

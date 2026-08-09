@@ -30,9 +30,10 @@ def create_app(name) -> Flask:
   import models
   migrate.init_app(app, db)
 
-  from controllers import user_bp
+  from controllers import user_bp, channel_bp
 
   app.register_blueprint(user_bp)
+  app.register_blueprint(channel_bp)
 
   api.register(app)
 

@@ -1,16 +1,20 @@
 from factory import db
-from models import Channel
-from models.utils.requests.channel import ChannelCreate, Channel, ChannelUpdate
+from models import Channel, User
+from models.utils.requests.channel import ChannelCreate, ChannelQuery, ChannelUpdate, ChannelSum
+from models.utils.requests.post import PostCreate
 from models.utils.responses import DefaultResp
 from models.utils.responses.channel import ChannelQueryResp
 from . import APIError
-from .user import is_moderator
+from . import user, post
 
 def owns_channel(user: User, channel: Channel) -> bool:
-  return channel.author == user or is_moderator(user)
+  return channel.author == user or user.is_moderator(user)
 
 def create_channel(user: User, data: ChannelCreate) -> DefaultResp:
-  ...
+  channel = Channel(author=user, **data.model_dump())
+  db.session.add(channel)
+  post.create_post(user, PostCreate(handle='sobre', title='Sobre', content='', channel=ChannelSum(handle=channel.handle)))
+  db.session.commit()
   return DefaultResp(msg='Channel created successfully!')
 
 def get_channel(id: int) -> Channel:
@@ -38,5 +42,8 @@ def update_channel(user: User, channel: Channel, data: ChannelUpdate) -> Default
 def delete_channel(user: User, channel: Channel) -> DefaultResp:
   if not owns_channel(user, channel):
     raise APIError("Forbidden operation with unauthoral channel.", 403)
+  if user.handle == channel.handle:
+    raise APIError("Cannot delete the default user channel.", 403)
+  db.session.delete(channel)
+  db.session.commit()
   return DefaultResp(msg='Channel deleted successfully!')
-  ...
