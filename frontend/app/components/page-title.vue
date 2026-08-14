@@ -13,8 +13,8 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="page_title">
+  <header class="page_title">
     <h1>{{ title }}</h1>
     <h2 v-if="subtitle !== null">{{ subtitle }}</h2>
-  </div>
+  </header>
 </template>

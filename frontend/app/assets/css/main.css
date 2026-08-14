@@ -4,6 +4,7 @@
   --white: #fff;
   --white-t: #fff6;
   --black: #000;
+  --post-it-yellow: #fed;
 
   --blur-radius: 10px;
 
@@ -78,6 +79,17 @@ nav .right {
 .navico {
   width: 20px;
   height: 20px;
+}
+
+footer {
+  background-color: var(--white);
+
+  margin: -10px -40px;
+  margin-top: 60px;
+  padding: 20px 0;
+
+  text-align: center;
+  border-top: solid var(--black) 5px;
 }
 
 h1,
@@ -224,3 +236,85 @@ a.link:hover {
 
   gap: 10px;
 }
+
+.infobox {
+  background-color: var(--post-it-yellow);
+  padding: 0 20px;
+  margin: 20px 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.infobox h4 {
+  margin: 10px 0;
+  color: var(--black);
+  border-bottom: dotted var(--black) 3px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+}
+
+.max-500 {
+  width: 100%;
+  max-width: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 15px;
+}
+
+form div.input {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: 0;
+}
+
+form label {
+  color: var(--black);
+  font-size: 16px;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+form input, form select {
+  font-size: 16px;
+  text-align: center;
+
+  background: var(--white);
+  color: var(--black);
+
+  height: 25px;
+  border: 2px var(--black) solid;
+  margin: 0 5px;
+}
+
+form input {
+  box-shadow:
+    3px 3px 0 var(--black),
+    -3px -3px 0 var(--grayer);
+}
+
+form select {
+  box-shadow:
+    3px 3px 0 var(--scarlet),
+    -3px -3px 0 var(--grayer);
+}
+
+form input:hover, form select:hover {
+  font-size: 20px;
+  box-shadow:
+    6px 6px 0 var(--grayer),
+    -6px -6px 0 var(--scarlet);
+}
+

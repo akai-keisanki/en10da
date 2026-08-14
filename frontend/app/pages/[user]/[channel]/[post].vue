@@ -12,12 +12,7 @@
 
   const resp = await get(`post/${user}/${channel}/${post}`)
   const title = resp.data.title;
-  // const content = resp.data.content;
-  const content = `
-This is a test of
-- maybe \\LaTeX: $2^{-1}at^2 + v_0t + s_0 = s$
-- maybe **mark***down*
-  `;
+  const content = resp.data.content;
 
   const md = new MarkdownIt({
     html: false,

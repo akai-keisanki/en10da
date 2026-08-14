@@ -22,5 +22,6 @@ const props = defineProps({
       :subtitle="subtitle"
     ></page-title>
     <slot />
+    <app-footer></app-footer>
   </main>
 </template>
