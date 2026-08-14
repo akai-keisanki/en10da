@@ -5,7 +5,7 @@ const API_BASE_URL = 'http://localhost:5000/'
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   devtools: { enabled: true },
-  modules: ['@nuxt/icon', '@nuxt/eslint', '@nuxtjs/google-fonts'],
+  modules: ['@nuxt/icon', '@nuxt/eslint', '@nuxtjs/google-fonts', '@sidebase/nuxt-auth', /*'@nuxt-alt/markdown-it'*/],
 
   googleFonts: {
     families: {
@@ -16,13 +16,13 @@ export default defineNuxtConfig({
     download: true
   },
 
-  css: ['~/assets/css/main.css']
+  css: ['~/assets/css/main.css'],
 
   runtimeConfig: {
     public: {
       baseURL: API_BASE_URL
     }
-  }
+  },
 
   auth: {
     isEnabled: true,
@@ -45,4 +45,9 @@ export default defineNuxtConfig({
       },
     },
   },
+
+  markdownIt: {
+    runtime: true,
+    use: ['@vscode/markdown-it-katex']
+  }
 })

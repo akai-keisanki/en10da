@@ -11,6 +11,14 @@
 
 <template>
   <page title=Login>
+    <div class=infobox>
+      <h3>
+        Você é nov@ no En10da?
+      </h3>
+      <p>
+        Caso não possua uma conta, crie uma na página de <NuxtLink to=/logon class=link>logon</NuxtLink>.
+      </p>
+    </div>
     <form @submit.prevent=makeLogin>
       <input id=handle type=text placeholder=identificador required v-model=handle>
       <input id=password type=password placeholder=senha required v-if=!emailLogin v-model=password>
