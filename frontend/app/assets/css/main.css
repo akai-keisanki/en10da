@@ -5,6 +5,7 @@
   --white-t: #fff6;
   --black: #000;
   --post-it-yellow: #fed;
+  --dark-yellow: #887b66;
 
   --blur-radius: 10px;
 
@@ -15,6 +16,7 @@
 * {
   font-family: var(--main-font);
   transition: 0.2s ease;
+  interpolate-size: allow-keywords;
 }
 
 body {
@@ -242,10 +244,13 @@ a.link:hover {
   padding: 0 20px;
   margin: 20px 0;
 
+  border: dotted var(--dark-yellow) 3px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
+  outline: solid var(--post-it-yellow) 0;
 }
 
 .infobox h4 {
@@ -254,12 +259,16 @@ a.link:hover {
   border-bottom: dotted var(--black) 3px;
 }
 
+.infobox.link:hover {
+  border: dotted var(--scarlet) 3px;
+  outline: solid var(--post-it-yellow) 6px;
+}
+
 form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 15px;
 }
 
 .max-500 {
@@ -269,15 +278,26 @@ form {
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
-  gap: 15px;
+}
+
+form div.input, form div.horinput {
+  display: flex;
 }
 
 form div.input {
-  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: stretch;
+  width: 100%;
+  margin: 20px 0;
   gap: 0;
+}
+
+form div.horinput {
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
 }
 
 form label {
@@ -296,7 +316,7 @@ form input, form select {
 
   height: 25px;
   border: 2px var(--black) solid;
-  margin: 0 5px;
+  margin: 5px;
 }
 
 form input {
@@ -313,8 +333,61 @@ form select {
 
 form input:hover, form select:hover {
   font-size: 20px;
+  border: 2px var(--white) solid;
   box-shadow:
     6px 6px 0 var(--grayer),
     -6px -6px 0 var(--scarlet);
 }
 
+form input[type=checkbox] {
+  appearance: none;
+  outline: none;
+
+  background-color: var(--white);
+  border: 2px var(--black) solid;
+  box-shadow:
+    3px 3px 0 var(--scarlet),
+    -3px -3px 0 var(--grayer);
+
+  width: 20px;
+  height: 20px;
+}
+
+form input[type=checkbox]:checked {
+  background-color: var(--scarlet);
+  border: 2px var(--white) solid;
+  box-shadow:
+    3px 3px 0 var(--black),
+    -3px -3px 0 var(--black);
+}
+
+form input[type=checkbox]:hover {
+  box-shadow:
+    6px 6px 0 var(--grayer),
+    -6px -6px 0 var(--scarlet);
+}
+
+form input[type=checkbox]:checked:hover {
+  box-shadow:
+    6px 6px 0 var(--grayer),
+    -0px -0px 0 var(--scarlet);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: 0.3s ease;
+  overflow: hidden !important;
+  opacity: 1;
+}
+
+.fade-enter-from, .fade-leave-to {
+  opacity: 0 !important;
+
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+
+  gap: 0 !important;
+  margin: 0 !important;
+  border-width: 0 !important;
+  padding: 0 !important;
+}
