@@ -282,6 +282,7 @@ form {
 
 form div.input, form div.horinput {
   display: flex;
+  margin: 10px 0;
 }
 
 form div.input {
@@ -289,7 +290,6 @@ form div.input {
   justify-content: center;
   align-items: stretch;
   width: 100%;
-  margin: 20px 0;
   gap: 0;
 }
 
@@ -298,6 +298,10 @@ form div.horinput {
   justify-content: center;
   align-items: center;
   gap: 20px;
+}
+
+form button {
+  margin: 20px 0;
 }
 
 form label {

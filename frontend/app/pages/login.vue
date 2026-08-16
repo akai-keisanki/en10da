@@ -1,5 +1,5 @@
 <script setup>
-  const {token, signIn, getSession} = useAuth
+  const {signIn} = useAuth()
   const {post} = useAPI()
 
   const emailLogin = ref(false)
@@ -14,11 +14,11 @@
     try {
       let resp = null
 
-      if (emailLogin)
+      if (emailLogin.value)
         resp = await signIn(
           {
-            handle,
-            email_code: emailCode
+            handle: handle.value,
+            email_code: emailCode.value
           },
           {
             redirect: false,
@@ -27,12 +27,17 @@
         )
       else
         resp = await signIn(
-          {handle, password},
+          {
+            handle: handle.value,
+            password: password.value
+          },
           {redirect: false}
         )
 
       if (!resp || resp.error)
         error.value = 'Erro no login! Confira o identificador e a senha.'
+      else
+        console.log('Successfully loged in!')
     } catch (e) {
       error.value = 'Erro de requisição.'
       console.log(e)
@@ -50,7 +55,7 @@
         Caso não possua uma conta, clique aqui para encaminhar-se à página de logon.
       </p>
     </div></NuxtLink>
-    <form @submit.prevent='makeLogin()'>
+    <form @submit.prevent=makeLogin()>
       <div class=max-500>
         <div class=input>
           <label for=handle>Identificador</label>

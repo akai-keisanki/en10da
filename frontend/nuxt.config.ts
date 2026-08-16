@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-const API_BASE_URL = 'http://localhost:5000/'
+const API_BASE_URL = 'http://localhost:3000/api/'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -48,5 +48,11 @@ export default defineNuxtConfig({
   markdownIt: {
     runtime: true,
     use: ['@vscode/markdown-it-katex']
+  },
+
+  routeRules: {
+    '/api/**': { 
+      proxy: 'http:localhost:5000/**',
+    },
   }
 })
