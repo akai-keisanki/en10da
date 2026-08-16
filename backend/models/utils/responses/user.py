@@ -16,5 +16,5 @@ class UserPrivResp(UserResp):
 class UserQueryResp(BaseModel):
   users: list[UserResp]
 
-class UserRoleList(BaseModel):
+class UserRoleListResp(BaseModel):
   user_roles: list[UserRole]

@@ -32,11 +32,11 @@ class UserPerm(Enum):
     return mask
 
 class UserRole(StrEnum):
-  STUDENT = auto()
-  POSTER = auto()
-  TEACHER = auto()
-  MODERATOR = auto()
-  ADMIN = auto()
+  STUDENT = 'estudante'
+  POSTER = 'poster'
+  TEACHER = 'docente'
+  MODERATOR = 'moderador@'
+  ADMIN = 'admin'
 
   @classmethod
   def from_int(cls, id: int) -> UserRole:

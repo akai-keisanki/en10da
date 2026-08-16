@@ -1,5 +1,7 @@
 from datetime import datetime
 
+from sqlalchemy.orm import validates
+
 from factory import db
 from .readlist_posts import readlist_posts
 
@@ -9,6 +11,12 @@ class Readlist(db.Model):
   id = db.Column(db.Integer, primary_key=True)
 
   handle = db.Column(db.String(128), nullable=False)
+  @validates('handle')
+  def validate_handle(self, key, value):
+    value = value.strip().lower()
+    if not re.match('[a-zA-Z1-9_-]+', value):
+      raise ValueError('Invalid handle.')
+    return value
   name = db.Column(db.String(128), nullable=False)
   description = db.Column(db.String(512), nullable=False, default='')
 

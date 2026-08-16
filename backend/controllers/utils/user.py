@@ -7,7 +7,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_tok
 from factory import db
 from models import User
 from models.utils import UserRole, UserPerm
-from models.utils.requests.user import UserCreate, UserQuery, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin, UserRoleList
+from models.utils.requests.user import UserCreate, UserQuery, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin
 from models.utils.requests.channel import ChannelCreate
 from models.utils.responses import DefaultResp
 from models.utils.responses.user import UserLoginResp, UserQueryResp
@@ -21,7 +21,7 @@ def list_user_roles() -> list[UserRoles]:
   return UserRole.get_available()
 
 def create_user(data: UserCreate) -> DefaultResp:
-  if data.role is not in list_user_roles():
+  if data.role not in list_user_roles():
     raise APIError('Forbidden role assignment.', 403)
   user = User(name=data.handle, **data.model_dump())
   db.session.add(user)

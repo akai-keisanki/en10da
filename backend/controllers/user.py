@@ -55,8 +55,8 @@ def user_handle_get(handle: str):
 def user_post(user: User):
   return update_user(user, UserUpdate.model_validate(request.get_json()))
 
-@user_db.get('/roles')
+@user_bp.get('/roles')
 @api.validate(resp=Response(HTTP_200=UserRoleListResp), tags=['user'])
 @wrap_resp()
-def user_get():
-  return UserRoleListResp(list_user_roles())
+def user_roles_get():
+  return UserRoleListResp(user_roles=list_user_roles())

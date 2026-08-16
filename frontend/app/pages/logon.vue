@@ -21,6 +21,11 @@
           <label for=handle>Identificador</label>
           <input id=handle type=text placeholder=identificador required v-model=handle>
         </div>
+        <div class='infobox'>
+          <p>
+            O identificador é um nome composto somente por letras (minúsculas (a-z) e maiúsculas (A-Z)) sem acentuação gráfica, dígitos (1-9) e os caracteres underline (_) e hífen (-), sem espaços.
+          </p>
+        </div>
         <div class=input>
           <label for=email>E-mail</label>
           <input id=email type=email placeholder=e-mail required v-model=birthday>

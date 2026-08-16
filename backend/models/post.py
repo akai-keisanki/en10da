@@ -1,5 +1,7 @@
 from datetime import datetime, timezone
 
+from sqlalchemy.orm import validates
+
 from factory import db
 from .likes import likes
 from .dislikes import dislikes
@@ -11,6 +13,12 @@ class Post(db.Model):
   id = db.Column(db.Integer, primary_key=True)
 
   handle = db.Column(db.String(128), nullable=False, unique=True)
+  @validates('handle')
+  def validate_handle(self, key, value):
+    value = value.strip().lower()
+    if not re.match('[a-zA-Z1-9_-]+', value):
+      raise ValueError('Invalid handle.')
+    return value
   title = db.Column(db.String(128), nullable=False)
   content = db.Column(db.Text, nullable=False, default='')
 

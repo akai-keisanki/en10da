@@ -66,7 +66,7 @@ class User(db.Model):
   @validates('handle')
   def validate_handle(self, key, value):
     value = value.strip().lower()
-    if not re.match('[a-zA-Z_-]+', value):
+    if not re.match('[a-zA-Z1-9_-]+', value):
       raise ValueError('Invalid handle.')
     return value
   name = db.Column(db.String(64), nullable=False)
