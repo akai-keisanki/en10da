@@ -49,23 +49,24 @@ def query_posts(data: PostQuery) -> PostQueryResp:
   if data.content:
     for cw in content.split():
       conds.append(Post.content.icontains(cw))
-  if data.user and data.user.model_dump():
+  if data.user:
     query.join(User)
     joined = True
-    if data.user.handle:
-      conds.append(User.handle.icontains(data.user.handle))
-    if data.user.name:
-      conds.append(User.name.icontains(data.user.name))
-  if data.channel and data.channel.model_dump():
+    if data.user_handle:
+      conds.append(User.handle.icontains(data.user_handle))
+    if data.user_name:
+      conds.append(User.name.icontains(data.user_name))
+  if data.channel:
     query.join(Channel)
     joined = True
-    if data.channel.handle:
-      conds.append(Channel.handle.icontains(data.channel.handle))
-    if data.channel.name:
-      conds.append(Channel.name.icontains(data.channel.name))
+    if data.channel_handle:
+      conds.append(Channel.handle.icontains(data.channel_handle))
+    if data.channel_name:
+      conds.append(Channel.name.icontains(data.channel_name))
+  query = query.where(db.and_(*conds))
   if joined:
     query = query.distinct()
-  query = query.where(db.and_(*conds))
+  return PostQueryResp(posts=db.session.scalars(query).all())
 
 def update_post(user: User, pst: Post, data: PostUpdate) -> DefaultResp:
   if not owns_post(user, pst):
