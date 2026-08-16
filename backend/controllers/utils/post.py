@@ -26,7 +26,7 @@ def get_post(id: int) -> Post:
 
 def get_post_by_path(user_handle: str, channel_handle: str, post_handle: str) -> Post:
   pst = db.session.scalars(
-    select(Post)
+    db.select(Post)
     .join(User).join(Channel)
     .where(db.and_(
       User.handle == user_handle,
@@ -49,13 +49,13 @@ def query_posts(data: PostQuery) -> PostQueryResp:
   if data.content:
     for cw in content.split():
       conds.append(Post.content.icontains(cw))
-  if data.user:
+  if data.author:
     query.join(User)
     joined = True
-    if data.user_handle:
-      conds.append(User.handle.icontains(data.user_handle))
-    if data.user_name:
-      conds.append(User.name.icontains(data.user_name))
+    if data.author_handle:
+      conds.append(User.handle.icontains(data.author_handle))
+    if data.author_name:
+      conds.append(User.name.icontains(data.author_name))
   if data.channel:
     query.join(Channel)
     joined = True

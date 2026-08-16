@@ -16,12 +16,12 @@ class ChannelQuerySum(BaseModel):
 class ChannelQuery(ChannelQuerySum):
   about_content: Optional[str] = None
 
-  user_handle: Optional[str] = None
-  user_name: Optional[str] = None
+  author_handle: Optional[str] = None
+  author_name: Optional[str] = None
   @property
-  def user(self) -> Optional[UserQuerySum]:
-    if self.user_handle or self.user_name:
-      return UserQuerySum(handle=self.user_handle, name=self.user_name)
+  def author(self) -> Optional[UserQuerySum]:
+    if self.author_handle or self.author_name:
+      return UserQuerySum(handle=self.author_handle, name=self.author_name)
     return None
 
 class ChannelUpdate(BaseModel):

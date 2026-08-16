@@ -3,7 +3,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from .user import UserQuery
+from .user import UserQuerySum
 from .channel import ChannelSum, ChannelQuerySum
 
 class PostCreate(BaseModel):
@@ -17,12 +17,12 @@ class PostQuery(BaseModel):
   title: Optional[str] = None
   content: Optional[str] = None
 
-  user_handle: Optional[str] = None
-  user_name: Optional[str] = None
+  author_handle: Optional[str] = None
+  author_name: Optional[str] = None
   @property
-  def user(self) -> Optional[UserQuerySum]:
-    if self.user_handle or self.user_name:
-      return UserQuerySum(handle=self.user_handle, name=self.user_name)
+  def author(self) -> Optional[UserQuerySum]:
+    if self.author_handle or self.author_name:
+      return UserQuerySum(handle=self.author_handle, name=self.author_name)
     return None
 
   channel_handle: Optional[str] = None
