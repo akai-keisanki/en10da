@@ -11,6 +11,7 @@
 
   --main-font: 'Rockwell', 'Noto Mono NF', 'Noto Sans Mono', monospace;
   --title-font: 'Cherry Swash', 'Noto Mono NF', 'Noto Sans Mono', monospace;
+  --mono-font: 'Noto Mono NF', 'Noto Sans Mono', monospace;
 }
 
 * {
@@ -394,4 +395,79 @@ form input[type=checkbox]:checked:hover {
   margin: 0 !important;
   border-width: 0 !important;
   padding: 0 !important;
+}
+
+.path {
+  font-family: var(--mono-font);
+}
+
+.post-sum {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+
+  width: auto;
+
+  padding: 10px 20px;
+  margin: 10px;
+  border: solid var(--grayer) 3px;
+}
+
+.post-sum:hover {
+  border: solid var(--grayer) 5px;
+  padding: 8px 18px;
+}
+
+.post-sum .cttcol_l, .post-sum .cttcol_r {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  height: 100%;
+}
+
+.post-sum .cttcol_l {
+  align-items: flex-start;
+}
+
+.post-sum .cttcol_r {
+  align-items: flex-end;
+}
+
+.post-sum .cttcol_l h4 {
+  width: 100%;
+
+  margin: 0;
+  margin-bottom: 10px;
+}
+
+.post-sum .cttcol_l .path {
+  /**/
+}
+
+.post-sum .cttcol_r .lndl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.post-sum .cttcol_r .lndl .likes {
+  color: #007700;
+}
+
+.post-sum .cttcol_r .lndl .dislikes{
+  color: #770000;
+}
+
+.post-sum .cttcol_r .datetime {
+  /**/
+}
+
+.post-list {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
