@@ -1,16 +1,20 @@
 <script setup>
-const props = defineProps({
-  title: {
-    type: String,
-    required: false,
-    default: null
-  },
-  subtitle: {
-    type: String,
-    required: false,
-    default: null
-  }
-})
+  const props = defineProps({
+    title: {
+      type: String,
+      required: false,
+      default: null
+    },
+    subtitle: {
+      type: String,
+      required: false,
+      default: null
+    }
+  })
+
+  useHead({
+    title: `En10da: ${props.title}`
+  })
 </script>
 
 <template>
