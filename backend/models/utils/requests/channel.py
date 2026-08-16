@@ -12,10 +12,17 @@ class ChannelCreate(ChannelSum):
 class ChannelQuerySum(BaseModel):
   handle: Optional[str] = None
   name: Optional[str] = None
-  about_content: Optional[str] = None
 
 class ChannelQuery(ChannelQuerySum):
-  user: Optional[UserQuery] = None
+  about_content: Optional[str] = None
+
+  user_handle: Optional[str] = None
+  user_name: Optional[str] = None
+  @property
+  def user(self) -> Optional[UserQuerySum]:
+    if self.user_handle or self.user_name:
+      return UserQuerySum(handle=self.user_handle, name=self.user_name)
+    return None
 
 class ChannelUpdate(BaseModel):
   handle: Optional[str] = None

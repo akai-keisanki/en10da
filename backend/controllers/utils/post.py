@@ -19,21 +19,53 @@ def create_post(user: User, data: PostCreate) -> DefaultResp:
   return DefaultResp(msg='Post created successfully!')
 
 def get_post(id: int) -> Post:
-  pst = Post.query.filter_by(id=id).first()
+  pst = db.session.get(Post, id)
   if not pst:
     raise APIError('Post not found', 404)
   return pst
 
 def get_post_by_path(user_handle: str, channel_handle: str, post_handle: str) -> Post:
-  pst = Post.query.join(User).join(Channel).filter(User.handle == user_handle,
-                                                    Channel.handle == channel_handle,
-                                                    Post.handle == post_handle).first()
+  pst = db.session.scalars(
+    select(Post)
+    .join(User).join(Channel)
+    .where(db.and_(
+      User.handle == user_handle,
+      Channel.handle == channel_handle,
+      Post.handle == post_handle
+    ))
+  ).first()
   if not pst:
     raise APIError('Post not found', 404)
   return pst
 
 def query_posts(data: PostQuery) -> PostQueryResp:
-  ...
+  query = db.select(Post)
+  conds = []
+  joined = False
+  if data.handle:
+    conds.append(Post.handle.icontains(data.handle))
+  if data.title:
+    conds.append(Post.title.icontains(data.title))
+  if data.content:
+    for cw in content.split():
+      conds.append(Post.content.icontains(cw))
+  if data.user and data.user.model_dump():
+    query.join(User)
+    joined = True
+    if data.user.handle:
+      conds.append(User.handle.icontains(data.user.handle))
+    if data.user.name:
+      conds.append(User.name.icontains(data.user.name))
+  if data.channel and data.channel.model_dump():
+    query.join(Channel)
+    joined = True
+    if data.channel.handle:
+      conds.append(Channel.handle.icontains(data.channel.handle))
+    if data.channel.name:
+      conds.append(Channel.name.icontains(data.channel.name))
+  if joined:
+    query = query.distinct()
+  query = query.where(db.and_(*conds))
 
 def update_post(user: User, pst: Post, data: PostUpdate) -> DefaultResp:
   if not owns_post(user, pst):

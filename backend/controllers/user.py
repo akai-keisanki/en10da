@@ -14,26 +14,26 @@ user_bp = Blueprint('user_controllers', __name__, url_prefix='/user')
 @user_bp.post('/logon')
 @api.validate(json=UserCreate, resp=Response(HTTP_200=DefaultResp), tags=['user'])
 @wrap_resp(def_code=201)
-def user_logon():
-  return create_user(UserCreate.model_validate(request.get_json()))
+def user_logon(json: UserCreate):
+  return create_user(json)
 
 @user_bp.post('/login')
 @api.validate(json=UserLogin, resp=Response(HTTP_200=UserLoginResp, HTTP_401=DefaultResp), tags=['user'])
 @wrap_resp(def_code=201)
-def user_login():
-  return make_user_login(UserLogin.model_validate(request.get_json()))
+def user_login(json: UserLogin):
+  return make_user_login(json)
 
 @user_bp.post('/request-email-code')
 @api.validate(json=UserEmailCodeRequest, resp=Response(HTTP_200=DefaultResp), tags=['user'])
 @wrap_resp(def_code=201)
-def user_request_email_code():
-  return send_user_email_code(UserEmailCodeRequest.model_validate(request.get_json()))
+def user_request_email_code(json: UserEmailCodeRequest):
+  return send_user_email_code(json)
 
 @user_bp.post('/login/email')
 @api.validate(json=UserEmailLogin, resp=Response(HTTP_200=UserLoginResp, HTTP_401=DefaultResp), tags=['user'])
 @wrap_resp(def_code=201)
-def user_login_email():
-  return make_user_login_by_email_code(UserEmailLogin.model_validate(request.get_json()))
+def user_login_email(json: UserEmailLogin):
+  return make_user_login_by_email_code(json)
 
 @user_bp.get('/')
 @api.validate(resp=Response(HTTP_200=UserPrivResp), tags=['user'], security=BA_SEC)
@@ -52,8 +52,8 @@ def user_handle_get(handle: str):
 @api.validate(json=UserUpdate, resp=Response(HTTP_200=DefaultResp), tags=['user'], security=BA_SEC)
 @wrap_resp(def_code=201)
 @req_perms()
-def user_post(user: User):
-  return update_user(user, UserUpdate.model_validate(request.get_json()))
+def user_post(user: User, json: UserUpdate):
+  return update_user(user, json)
 
 @user_bp.get('/roles')
 @api.validate(resp=Response(HTTP_200=UserRoleListResp), tags=['user'])

@@ -11,9 +11,11 @@ class UserCreate(BaseModel):
   birthday: date
   role: UserRole
 
-class UserQuery(BaseModel):
+class UserQuerySum(BaseModel):
   handle: Optional[str] = None
   name: Optional[str] = None
+
+class UserQuery(UserQuerySum):
   about_content: Optional[str] = None
 
 class UserUpdate(BaseModel):

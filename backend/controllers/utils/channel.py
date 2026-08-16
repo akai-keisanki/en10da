@@ -18,14 +18,18 @@ def create_channel(user: User, data: ChannelCreate) -> DefaultResp:
   return DefaultResp(msg='Channel created successfully!')
 
 def get_channel(id: int) -> Channel:
-  channel = Channel.query.filter_by(id=id).first()
+  channel = db.session.get(Channel, id)
   if not channel:
     raise APIError('Channel not found', 404)
   return channel
 
 def get_channel_by_path(user_handle: str, channel_handle: str) -> Channel:
-  channel = Channel.query.join(User).filter(User.handle == user_handle,
-                                            Channel.handle == channel_handle).first()
+  channel = db.session.scalars(db.select(Channel).join(User)
+    .where(
+      User.handle == user_handle,
+      Channel.handle == channel_handle
+    )
+  ).first()
   if not channel:
     raise APIError('Channel not found', 404)
   return channel

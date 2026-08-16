@@ -5,7 +5,7 @@ from secrets import token_urlsafe
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
 from factory import db
-from models import User
+from models import User, Post, Channel
 from models.utils import UserRole, UserPerm
 from models.utils.requests.user import UserCreate, UserQuery, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin
 from models.utils.requests.channel import ChannelCreate
@@ -30,22 +30,41 @@ def create_user(data: UserCreate) -> DefaultResp:
   return DefaultResp(msg='User created succesfully!')
 
 def get_logged_user() -> User:
-  return User.query.filter_by(id=int(get_jwt_identity())).first()
+  return db.session.get(User, int(get_jwt_identity()))
   
 def get_user(id: int) -> User:
-  user = User.query.filter_by(id=id).first()
+  user = db.session.get(User, id)
   if not user:
     raise APIError('User not found', 404)
   return user
 
 def get_user_by_handle(handle: str) -> User:
-  user = User.query.filter_by(handle=handle).first()
+  user = db.session.scalars(db.select(User).where(User.handle == handle)).first()
   if not user:
     raise APIError('User not found', 404)
   return user
 
 def query_users(data: UserQuery) -> UserQueryResp:
-  ...
+  query = db.select(User)
+  conds = []
+  joined = False
+  if data.handle:
+    conds.append(User.handle.icontains(data.handle))
+  if data.name:
+    conds.append(User.name.icontains(data.name))
+  if data.about_content:
+    query.join(Post)
+    query.join(Channel)
+    joined = True
+    conds.append(Post.handle == 'sobre')
+    conds.append(Channel.handle == User.handle)
+    conds.append(Post.channel_id == Channel.id)
+    for aw in about_content.split():
+      conds.append(Post.content.icontains(aw))
+  query = query.where(db.and_(*conds))
+  if joined:
+    query = query.distinct()
+  return UserQueryResp(users=db.session.scalars(query).all())
   
 def update_user(user: User, data: UserUpdate) -> DefaultResp:
   password_updated = False
