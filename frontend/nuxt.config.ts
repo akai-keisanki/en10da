@@ -1,6 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
-const API_BASE_URL = 'http://localhost:3000/api/'
+const API_BASE_URL = 'http://localhost:3000/backend/'
 
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -51,7 +51,7 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/api/**': { 
+    '/backend/**': { 
       proxy: 'http:localhost:5000/**',
     },
   }

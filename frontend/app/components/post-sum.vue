@@ -14,11 +14,7 @@
       <div class=path>{{data.author.handle}}/{{data.channel.handle}}/{{data.handle}}</div>
     </div>
     <div class=cttcol_r>
-      <div class=lndl>
-        <div class=likes>+{{data.like_count}}</div>
-        <div class=dislikes>-{{data.dislike_count}}</div>
-      </div>
-      <div class=datetime>{{data.creation_datetime}}</div>
+      <post-sum-secdata :data=data></post-sum-secdata>
     </div>
   </div></NuxtLink>
 </template>

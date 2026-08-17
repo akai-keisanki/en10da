@@ -12,6 +12,15 @@
 
 <template>
   <page :title=title :subtitle='`${user}/${channel}/${post}`'>
+    <div class=post-dt>
+      <post-sum-secdata :data=resp.data></post-sum-secdata>
+      <div>
+        Channel: <NuxtLink :to='`/${user}/${channel}`' class=link>{{resp.data.channel.name}}</NuxtLink>
+      </div>
+      <div>
+        Author: <NuxtLink :to='`/${user}`' class=link>{{resp.data.author.name}}</NuxtLink>
+      </div>
+    </div>
     <en10da-post :content=content></en10da-post>
   </page>
 </template>

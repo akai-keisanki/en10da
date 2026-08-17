@@ -105,7 +105,41 @@ h6 {
   font-family: var(--title-font);
 
   margin: 50px 0 5px 0;
-  border-bottom: solid var(--scarlet) 5px;
+}
+
+h1 {
+  border-bottom: solid var(--scarlet) 0.15em;
+}
+
+h2 {
+  border-bottom: dotted var(--scarlet) 0.15em;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  border-bottom: none;
+}
+
+h1 {
+  font-size: 40px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 20px;
+}
+h4 {
+  font-size: 15px;
+  border-bottom: solid var(--scarlet) 0.15em;
+}
+h5 {
+  font-size: 10px;
+}
+h6 {
+  font-size: 5px;
 }
 
 h1 {
@@ -401,16 +435,25 @@ form input[type=checkbox]:checked:hover {
   font-family: var(--mono-font);
 }
 
-.post-sum {
+.post-dt, .post-sum {
   display: flex;
-  flex-direction: row;
   justify-content: space-between;
-  align-items: stretch;
 
   width: auto;
+}
 
-  padding: 10px 20px;
+.post-dt {
+  flex-direction: row;
+  align-items: center;
+  margin: 20px 10px;
+}
+
+.post-sum {
+  flex-direction: row;
+  align-items: stretch;
+
   margin: 10px;
+  padding: 10px 20px;
   border: solid var(--grayer) 3px;
 }
 
@@ -433,6 +476,7 @@ form input[type=checkbox]:checked:hover {
 
 .post-sum .cttcol_r {
   align-items: flex-end;
+  gap: 10px;
 }
 
 .post-sum .cttcol_l h4 {
@@ -453,15 +497,49 @@ form input[type=checkbox]:checked:hover {
   align-items: center;
 }
 
-.post-sum .cttcol_r .lndl .likes {
+.lndl {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  padding: 5px;
+  border: solid var(--grayer) 3px;
+  border-radius: 100vw;
+}
+
+.post-dt .lndl {
+  flex-direction: row;
+  gap: 20px;
+}
+
+.post-sum .cttcol_r .lndl .likes button, .post-sum .cttcol_r .lndl .dislikes button {
+  display: none;
+}
+
+.post-dt .lndl .likes button, .post-dt .lndl .dislikes button  {
+  box-shadow: none;
+  margin: 0;
+  color: var(--black);
+  border-radius: 100vh;
+}
+
+.lndl .likes, .lndl .dislikes {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.lndl .likes {
   color: #007700;
 }
 
-.post-sum .cttcol_r .lndl .dislikes{
+.lndl .dislikes {
   color: #770000;
 }
 
-.post-sum .cttcol_r .datetime {
+.datetime {
   /**/
 }
 

@@ -19,7 +19,7 @@
     </div>
     <div class=right v-else>
       <NuxtLink to=/pages><button>
-        <Icon name="mdi:hamburger-menu" />
+        <Icon name="mdi:menu" />
       </button></NuxtLink>
     </div>
   </nav>
