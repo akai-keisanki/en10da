@@ -559,7 +559,7 @@ form input[type=checkbox]:checked:hover {
   /**/
 }
 
-.post-list {
+.centercol {
   display: flex;
   flex-direction: column;
   justify-content: center;

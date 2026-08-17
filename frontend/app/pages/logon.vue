@@ -2,8 +2,18 @@
   const {token, signIn, getSession} = useAuth
   const {get, post} = useAPI()
 
-  let roles = await get('user/roles')
-  roles = roles.data.user_roles
+  const rolesStatus = ref('LOADING')
+  const roles = ref([])
+
+  async function requestRoles() {
+    try {
+      rolesStatus.value = 'LOADING'
+      roles.value = (await get('user/roles')).data.user_roles
+      rolesStatus.value = 'AVAILABLE'
+    } catch (error) {
+      rolesStatus.value = error.message
+    }
+  }
 
   const emailLogin = ref(false)
 
@@ -11,6 +21,13 @@
   const email = ref('')
   const birthday = ref('')
   const role = ref('')
+
+  const error = ref('')
+
+  async function makeLogon() {
+  }
+
+  requestRoles()
 </script>
 
 <template>
@@ -37,6 +54,9 @@
         <div class=input>
           <label for=role>Cargo</label>
           <select id=role required v-model=role>
+            <option value='' disabled hidden selected v-if='rolesStatus === "AVAILABLE"'>Selecione um cargo...</option>
+            <option value='' disabled hidden selected v-else-if='rolesStatus === "LOADING"'>Carregando...</option>
+            <option value='' disabled hidden selected v-else>Erro ao carregar cargos.</option>
             <option v-for='r in roles' :key=r :value=r>
               {{r}}
             </option>

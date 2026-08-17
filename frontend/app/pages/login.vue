@@ -37,9 +37,9 @@
       if (!resp || resp.error)
         error.value = 'Erro no login! Confira o identificador e a senha.'
       else
-        console.log('Successfully loged in!')
+        error.value = 'Login completo com sucesso!'
     } catch (e) {
-      error.value = 'Erro de requisição.'
+      error.value = e
       console.log(e)
     }
   }
@@ -57,6 +57,13 @@
     </div></NuxtLink>
     <form @submit.prevent=makeLogin()>
       <div class=max-500>
+        <Transition name=fade>
+          <div class='infobox' v-show=error>
+            <p>
+              {{error}}
+            </p>
+          </div>
+        </Transition>
         <div class=input>
           <label for=handle>Identificador</label>
           <input id=handle type=text placeholder=identificador required v-model=handle>
