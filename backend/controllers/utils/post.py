@@ -53,14 +53,14 @@ def query_posts(data: PostQuery) -> PostQueryResp:
     query.join(User)
     joined = True
     if data.author_handle:
-      conds.append(User.handle.icontains(data.author_handle))
+      conds.append(User.handle == data.author_handle)
     if data.author_name:
       conds.append(User.name.icontains(data.author_name))
   if data.channel:
     query.join(Channel)
     joined = True
     if data.channel_handle:
-      conds.append(Channel.handle.icontains(data.channel_handle))
+      conds.append(Channel.handle == data.channel_handle)
     if data.channel_name:
       conds.append(Channel.name.icontains(data.channel_name))
   query = query.where(db.and_(*conds))
