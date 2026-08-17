@@ -79,6 +79,21 @@ nav .right {
   gap: 10px;
 }
 
+.page-button-column {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+
+  margin: 20px 10px;
+  gap: 10px;
+}
+
+.page-button-column button {
+  width: 100%;
+  padding: 12px;
+}
+
 .navico {
   width: 20px;
   height: 20px;
@@ -187,6 +202,7 @@ button {
 
   border: none;
   margin: 8px;
+  gap: 5px;
   box-shadow:
     5px 5px 0 var(--black),
     -5px -5px 0 var(--scarlet);

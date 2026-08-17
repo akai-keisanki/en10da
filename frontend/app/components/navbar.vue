@@ -12,6 +12,7 @@
       En10da
     </div>
     <div class=center v-if=userData>
+      <Icon name=mdi:account size=20px />
       {{userData.handle}}
     </div>
     <div class=right v-if='width/height > 1'>
@@ -19,7 +20,7 @@
     </div>
     <div class=right v-else>
       <NuxtLink to=/pages><button>
-        <Icon name="mdi:menu" />
+        <Icon name=mdi:menu size=20px />
       </button></NuxtLink>
     </div>
   </nav>
