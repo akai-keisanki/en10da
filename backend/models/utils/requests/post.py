@@ -33,6 +33,8 @@ class PostQuery(BaseModel):
       return ChannelQuerySum(handle=self.channel_handle, name=self.channel_name)
     return None
 
+  order_by_oldest: Optional[bool] = False
+
 class PostUpdate(BaseModel):
   handle: Optional[str] = None
   title: Optional[str] = None

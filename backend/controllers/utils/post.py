@@ -66,6 +66,10 @@ def query_posts(data: PostQuery) -> PostQueryResp:
   query = query.where(db.and_(*conds))
   if joined:
     query = query.distinct()
+  if data.order_by_oldest:
+    query = query.order_by(Post.creation_datetime)
+  else:
+    query = query.order_by(Post.creation_datetime.desc())
   return PostQueryResp(posts=db.session.scalars(query).all())
 
 def update_post(user: User, pst: Post, data: PostUpdate) -> DefaultResp:
