@@ -23,3 +23,9 @@ python -m flask db upgrade
 ```sh
 python populate_db.py
 ```
+
+## Run
+
+```
+python -m flask run
+```
