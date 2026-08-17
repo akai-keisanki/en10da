@@ -1,9 +1,11 @@
 from datetime import datetime
 from random import randint
 from secrets import token_urlsafe
+from os import path
 
 from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token
 
+from config import BASE_DIR
 from factory import db
 from models import User, Post, Channel
 from models.utils import UserRole, UserPerm
@@ -100,24 +102,8 @@ def send_user_email_code(data: UserEmailCodeRequest) -> DefaultResp:
     raise APIError('There was already sent a valid email code.', 409)
   code = token_urlsafe(randint(128, 256))
   user.set_email_code(code)
-  send_email(subject='email code',
-             body=f"""
-              <p class=card-text>
-              If you don\'t have an En10da account, please ignore this email.
-              </p>
-              <p>
-                An email code was requested.
-                The following code expires at {user.email_code_expiration_datetime} UTC or at use.
-              </p>
-              <p class=card-text>
-                Generated code:
-                <div class=card-body>
-                  <code class=card-text>
-                    {code}
-                  </code>
-                </div>
-              </p>
-             """,
+  send_email(subject='Código de email',
+             body=open(path.join(BASE_DIR, 'emails/email_code.html'), 'r').read().replace('{user.email_code_expiration_datetime}', user.email_code_expiration_datetime),
              html=True,
              address=user.email)
   db.session.commit()
