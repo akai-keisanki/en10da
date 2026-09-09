@@ -15,6 +15,10 @@ vi .env # edit to your data
 ## Configuring the database:
 
 ```sh
+rm -rf app.db  migrations/
+```
+
+```sh
 python -m flask db init
 python -m flask db migrate
 python -m flask db upgrade
@@ -26,6 +30,6 @@ python populate_db.py
 
 ## Run
 
-```
+```sh
 python -m flask run
 ```
