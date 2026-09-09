@@ -3,7 +3,6 @@ from datetime import datetime, date
 from pydantic import BaseModel, ConfigDict, field_validator
 
 class ORMBase(BaseModel):
-  id: int
   @field_validator("*")
   @classmethod
   def val_dates(cls, obj):

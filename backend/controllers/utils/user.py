@@ -30,21 +30,15 @@ def create_user(data: UserCreate) -> DefaultResp:
   channel.create_channel(user, ChannelCreate(handle=user.handle, name=user.name))
   db.session.commit()
   return DefaultResp(msg='User created succesfully!')
+  
+def get_user(handle: str) -> User:
+  user = db.session.get(User, handle)
+  if not user:
+    raise APIError('User not found', 404)
+  return user
 
 def get_logged_user() -> User:
-  return db.session.get(User, int(get_jwt_identity()))
-  
-def get_user(id: int) -> User:
-  user = db.session.get(User, id)
-  if not user:
-    raise APIError('User not found', 404)
-  return user
-
-def get_user_by_handle(handle: str) -> User:
-  user = db.session.scalars(db.select(User).where(User.handle == handle)).first()
-  if not user:
-    raise APIError('User not found', 404)
-  return user
+  return get_user(get_jwt_identity())
 
 def query_users(data: UserQuery) -> UserQueryResp:
   query = db.select(User)
@@ -60,7 +54,7 @@ def query_users(data: UserQuery) -> UserQueryResp:
     joined = True
     conds.append(Post.handle == 'sobre')
     conds.append(Channel.handle == User.handle)
-    conds.append(Post.channel_id == Channel.id)
+    conds.append(Post.channel_handle == Channel.handle)
     for aw in about_content.split():
       conds.append(Post.content.icontains(aw))
   query = query.where(db.and_(*conds))
@@ -86,16 +80,16 @@ def delete_user(user: User) -> DefaultResp:
   ...
 
 def make_user_access_token(user: User) -> str:
-  return create_access_token(identity=str(user.id))
+  return create_access_token(identity=user.handle)
 
 def make_user_login(data: UserLogin) -> UserLoginResp:
-  user = get_user_by_handle(data.handle)
+  user = get_user(data.handle)
   if not user.check_password(data.password):
     raise APIError('Wrong or unset password.', 401)
   return UserLoginResp(access_token=make_user_access_token(user))
 
 def send_user_email_code(data: UserEmailCodeRequest) -> DefaultResp:
-  user = get_user_by_handle(data.handle)
+  user = get_user(data.handle)
   if user.email != data.email:
     raise APIError('Wrong email.', 401)
   if user.email_code_is_valid():
@@ -110,7 +104,7 @@ def send_user_email_code(data: UserEmailCodeRequest) -> DefaultResp:
   return DefaultResp(msg='Email sent successfully!')
 
 def make_user_login_by_email_code(data: UserEmailLogin) -> UserLoginResp:
-  user = get_user_by_handle(data.handle)
+  user = get_user(data.handle)
   if not user.check_email_code(data.email_code):
     raise APIError('Wrong or invalid email code.', 401)
   return UserLoginResp(access_token=make_user_access_token(user))

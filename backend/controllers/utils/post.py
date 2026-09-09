@@ -18,22 +18,8 @@ def create_post(user: User, data: PostCreate) -> DefaultResp:
   db.session.commit()
   return DefaultResp(msg='Post created successfully!')
 
-def get_post(id: int) -> Post:
-  pst = db.session.get(Post, id)
-  if not pst:
-    raise APIError('Post not found', 404)
-  return pst
-
-def get_post_by_path(user_handle: str, channel_handle: str, post_handle: str) -> Post:
-  pst = db.session.scalars(
-    db.select(Post)
-    .join(User).join(Channel)
-    .where(db.and_(
-      User.handle == user_handle,
-      Channel.handle == channel_handle,
-      Post.handle == post_handle
-    ))
-  ).first()
+def get_post(user_handle: str, channel_handle: str, post_handle: str) -> Post:
+  pst = db.session.get(Post, {'author_handle': user_handle, 'channel_handle': channel_handle, 'handle': post_handle})
   if not pst:
     raise APIError('Post not found', 404)
   return pst

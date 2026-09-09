@@ -9,9 +9,7 @@ from .readlist_posts import readlist_posts
 class Readlist(db.Model):
   __tablename__ = 'readlists'
 
-  id = db.Column(db.Integer, primary_key=True)
-
-  handle = db.Column(db.String(128), nullable=False)
+  handle = db.Column(db.String(128), primary_key=True)
   @validates('handle')
   def validate_handle(self, key, value):
     value = value.strip().lower()
@@ -23,11 +21,7 @@ class Readlist(db.Model):
 
   creation_datetime = db.Column(db.DateTime(timezone=True), nullable=False, default=lambda: datetime.utcnow().date())
 
-  author_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+  author_handle = db.Column(db.String(128), db.ForeignKey('users.handle'), primary_key=True)
   author = db.relationship('User', back_populates='readlists')
 
   posts = db.relationship('Post', secondary=readlist_posts, back_populates='readlists')
-
-  __table_args__ = (
-    db.UniqueConstraint('author_id', 'handle', name='uq_handle'),
-  )

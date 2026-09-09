@@ -7,11 +7,10 @@ from sqlalchemy.orm import validates
 from .likes import likes
 from .dislikes import dislikes
 from factory import db
+from .utils import UserRole
 
 class User(db.Model):
   __tablename__ = 'users'
-
-  id = db.Column(db.Integer, primary_key=True)
 
   email = db.Column(db.Text, nullable=False)
   @validates('email')
@@ -62,7 +61,7 @@ class User(db.Model):
       raise ValueError('Invalid role.')
     return value
 
-  handle = db.Column(db.String(64), nullable=False, unique=True)
+  handle = db.Column(db.String(128), primary_key=True)
   @validates('handle')
   def validate_handle(self, key, value):
     value = value.strip().lower()

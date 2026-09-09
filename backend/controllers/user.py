@@ -7,7 +7,7 @@ from models.utils.responses import DefaultResp
 from models.utils.requests.user import UserCreate, UserUpdate, UserLogin, UserEmailCodeRequest, UserEmailLogin
 from models.utils.responses.user import UserLoginResp, UserResp, UserQueryResp, UserPrivResp, UserRoleListResp
 from .utils import wrap_resp, req_perms, BA_SEC
-from .utils.user import create_user, make_user_login, make_user_login_by_email_code, get_logged_user, get_user_by_handle, query_users, update_user, delete_user, send_user_email_code, list_user_roles
+from .utils.user import create_user, make_user_login, make_user_login_by_email_code, get_logged_user, get_user, query_users, update_user, delete_user, send_user_email_code, list_user_roles
 
 user_bp = Blueprint('user_controllers', __name__, url_prefix='/user')
 
@@ -46,7 +46,7 @@ def user_get(user: User):
 @api.validate(resp=Response(HTTP_200=UserResp), tags=['user'])
 @wrap_resp()
 def user_handle_get(handle: str):
-  return UserResp.model_validate(get_user_by_handle(handle))
+  return UserResp.model_validate(get_user(handle))
 
 @user_bp.post('/')
 @api.validate(json=UserUpdate, resp=Response(HTTP_200=DefaultResp), tags=['user'], security=BA_SEC)
