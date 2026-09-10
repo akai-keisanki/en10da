@@ -565,3 +565,11 @@ form input[type=checkbox]:checked:hover {
   justify-content: center;
   align-items: center;
 }
+
+.post {
+}
+
+.post-editor {
+  min-width: max(50%, 200px);
+  height: 100px;
+}

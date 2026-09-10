@@ -45,7 +45,7 @@
         </div>
         <div class=input>
           <label for=email>E-mail</label>
-          <input id=email type=email placeholder=e-mail required v-model=birthday>
+          <input id=email type=email placeholder=e-mail required v-model=email>
         </div>
         <div class=input>
           <label for=birthday>Aniversário</label>
