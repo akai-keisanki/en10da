@@ -222,6 +222,7 @@ __marimo__/
 # Flask
 app.db
 migrations/
+.fuse_hidden*
 
 # NODE GITIGNORE
 

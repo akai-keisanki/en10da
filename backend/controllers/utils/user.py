@@ -97,7 +97,9 @@ def send_user_email_code(data: UserEmailCodeRequest) -> DefaultResp:
   code = token_urlsafe(randint(128, 256))
   user.set_email_code(code)
   send_email(subject='Código de email',
-             body=open(path.join(BASE_DIR, 'emails/email_code.html'), 'r').read().replace('{user.email_code_expiration_datetime}', user.email_code_expiration_datetime),
+             body=open(path.join(BASE_DIR, 'emails/email_code.html'), 'r').read()
+                  .replace('{code}', code)
+                  .replace('{user.email_code_expiration_datetime}', user.email_code_expiration_datetime.strftime('%Y-%m-%d %H:%M:%S')),
              html=True,
              address=user.email)
   db.session.commit()

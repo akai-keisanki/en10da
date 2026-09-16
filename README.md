@@ -6,6 +6,17 @@
 ![forks](https://img.shields.io/github/forks/akai-keisanki/en10da)
 ![stars](https://img.shields.io/github/stars/akai-keisanki/en10da)
 
-A plataforma En10da é um projeto antigo e traz um espaço para estudantes, professores e entusiastas compartilhar material de sua autoria.
+## O que é a "En10da"?
 
-A funcionalidade deste projeto é inteiramente Open Source.
+A En10da (pronuncia-se "en-ten-da" ou "entenda") é uma plataforma open-source planejada e projetada desde 2023 por Iago ["akai-keisanki"](https://akaikeisanki.tngl.io) Alves Dias que traz um espaço para estudantes, professores e entusiastas compartilharem material de sua autoria e consumirem esse material de forma organizada por meio de perfis, canais e posts.
+
+São registrados posts educativos na plataforma.
+É possível criar uma conta como estudante para engajar com esses posts e criar listas de leitura ou como publicador(a) para postar ou como professor(a) para poder criar posts, atividades e turmas.
+
+O código fonte está disponível em <https://tangled.org/akaikeisanki.bsky.social/en10da>.
+
+## Estado de desenvolvimento
+
+A plataforma atualmente está em um processo de desenvolvimento e prototipação.
+Podem haver erros e muitas das funcionalidades não estão completas.
+
