@@ -13,6 +13,8 @@ A En10da (pronuncia-se "en-ten-da" ou "entenda") é uma plataforma open-source p
 São registrados posts educativos na plataforma.
 É possível criar uma conta como estudante para engajar com esses posts e criar listas de leitura ou como publicador(a) para postar ou como professor(a) para poder criar posts, atividades e turmas.
 
+Acompanhe a plataforma no BlueSky: <https://bsky.app/profile/en10da.bsky.social>.
+
 O código fonte está disponível em <https://tangled.org/akaikeisanki.bsky.social/en10da>.
 
 ## Estado de desenvolvimento
