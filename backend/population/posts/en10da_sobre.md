@@ -7,7 +7,7 @@ São registrados posts educativos na plataforma.
 
 Acompanhe a plataforma no BlueSky: <https://bsky.app/profile/en10da.bsky.social>.
 
-O código fonte está disponível em <https://tangled.org/akaikeisanki.bsky.social/en10da>.
+O código fonte está disponível em <https://tangled.org/en10da.bsky.social/en10da>.
 
 # Estado de desenvolvimento
 
